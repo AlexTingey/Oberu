@@ -33,4 +33,7 @@ public class Card {
     public int getDifficulty(Card card){
         return card.difficulty;
     }
+    public static String forKapptie(){
+        return "Oberu";
+    }
 }
