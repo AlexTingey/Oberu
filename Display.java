@@ -10,45 +10,41 @@ import java.awt.event.*;
         //Will display the card with body, header and footer.
     }
     public static void displayMenu(){
+        Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int)screenSize.getWidth();
+        int height = (int)screenSize.getHeight();
         JFrame mainWindow = new JFrame(Card.forKapptie());
         mainWindow.setLayout(null);
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainWindow.setSize(1000, 1000);
+        mainWindow.setSize(width /2 , height /2 );
         mainWindow.setVisible(true);
-
         JLabel title = new JLabel(Card.forKapptie());
         title.setText(Card.forKapptie());
-        title.setSize(200,200);
-        title.setFont(new Font("Helvetica",1, 50));
-        title.setLocation(450,50);
+        title.setSize(200, 200);
+        title.setFont(new Font("Helvetica", 1, 50));
+        title.setLocation(mainWindow.getHeight() /2 + 175, 50 );
         title.setVisible(true);
 
         JPanel DeckMenuPanel = new JPanel();
-        DeckMenuPanel.setLayout(null);
         JButton DeckMenu = new JButton("Create Deck");
         DeckMenu.setLayout(null);
         DeckMenu.setVisible(true);
         DeckMenu.setBounds(420, 200, 100, 100);
         DeckMenuPanel.setBounds(420, 200, 200, 100);
         DeckMenu.setSize(200, 50);
-        DeckMenu.setLocation(0,0);
-        DeckMenu.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
+        DeckMenu.setLocation(0, 0);
+        DeckMenu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 System.out.println("Another One");
             }
         });
-
-
-
         JButton studyButton = new JButton("Study Deck");
         studyButton.setLayout(null);
         studyButton.setVisible(true);
         studyButton.setBounds(700,200,100,100);
-        studyButton.setBounds(700,200,200,100);
-        studyButton.setSize(200,50);
-        DeckMenu.setLocation(0,0);
-
-
+        studyButton.setBounds(700, 200, 200, 100);
+        studyButton.setSize(200, 50);
+        DeckMenu.setLocation(0, 0);
         DeckMenuPanel.add(DeckMenu);
         DeckMenuPanel.add(studyButton);
         mainWindow.add(DeckMenuPanel);
