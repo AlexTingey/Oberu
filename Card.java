@@ -33,6 +33,10 @@ public class Card {
     public int getDifficulty(Card card){
         return card.difficulty;
     }
+    public static void createCard(){
+        //Displays the area where you can enter in data in a user friendly way to create new cards.
+    }
+
     public static String forKapptie(){
         return "Oberu";
     }

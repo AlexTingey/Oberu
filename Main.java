@@ -3,6 +3,7 @@
  */
 public class Main {
     public static void main(String[] args){
-        Display.displayMenu();
+        Display mainMenu = new Display();
+        mainMenu.prepareGUI();
     }
 }

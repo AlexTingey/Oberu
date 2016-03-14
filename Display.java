@@ -5,63 +5,68 @@ import java.awt.event.*;
 /**
  * Created by Alex on 11/14/2015.
  */
- public class Display extends JFrame implements ActionListener{
-    public static void displayCard(Card card){
-        //Will display the card with body, header and footer.
-    }
-    public static void displayMenu(){
-        Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        int width = (int)screenSize.getWidth();
-        int height = (int)screenSize.getHeight();
-        JFrame mainWindow = new JFrame(Card.forKapptie());
-        mainWindow.setLayout(null);
-        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainWindow.setSize(width /2 , height /2 );
-        mainWindow.setVisible(true);
-        JLabel title = new JLabel(Card.forKapptie());
-        title.setText(Card.forKapptie());
-        title.setSize(200, 200);
-        title.setFont(new Font("Helvetica", 1, 50));
-        title.setLocation(mainWindow.getHeight() /2 + 175, 50 );
-        title.setVisible(true);
+ public class Display{
 
-        JPanel DeckMenuPanel = new JPanel();
-        JButton DeckMenu = new JButton("Create Deck");
-        DeckMenu.setLayout(null);
-        DeckMenu.setVisible(true);
-        DeckMenu.setBounds(420, 200, 100, 100);
-        DeckMenuPanel.setBounds(420, 200, 200, 100);
-        DeckMenu.setSize(200, 50);
-        DeckMenu.setLocation(0, 0);
-        DeckMenu.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Another One");
+    private JFrame mainFrame;
+    private JLabel header;
+    private JLabel statusLabel;
+    private JPanel controlPanel;
+
+    public void prepareGUI() {
+        mainFrame = new JFrame("Oberu");
+        mainFrame.setSize(500, 650);
+        mainFrame.setLayout(new GridLayout(3, 3));
+
+        header = new JLabel("", JLabel.CENTER);
+        statusLabel = new JLabel("", JLabel.CENTER);
+
+        statusLabel.setSize(350, 100);
+
+        controlPanel = new JPanel();
+        controlPanel.setLayout(new FlowLayout());
+        controlPanel.setBackground(Color.blue);
+
+        mainFrame.add(header);
+        mainFrame.add(controlPanel);
+        mainFrame.add(statusLabel);
+        mainFrame.setVisible(true);
+        event();
+    }
+
+    public void event(){
+        header.setText("Oberu");
+
+        JButton studyButton = new JButton("Study");
+        JButton createDeckButton = new JButton("Create Deck");
+        JButton exitButton = new JButton("Exit");
+
+        studyButton.setActionCommand("Study");
+        createDeckButton.setActionCommand("Create Deck");
+        exitButton.setActionCommand("Exit");
+
+        studyButton.addActionListener(new ButtonClickerListener());
+        createDeckButton.addActionListener(new ButtonClickerListener());
+        exitButton.addActionListener(new ButtonClickerListener());
+
+        controlPanel.add(studyButton);
+        controlPanel.add(createDeckButton);
+        controlPanel.add(exitButton);
+    }
+    private class ButtonClickerListener implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            String command = e.getActionCommand();
+            if(command.equals("Study")){
+                statusLabel.setText("Will take you to the study section");
+                controlPanel.setBackground(Color.BLACK);
             }
-        });
-        JButton studyButton = new JButton("Study Deck");
-        studyButton.setLayout(null);
-        studyButton.setVisible(true);
-        studyButton.setBounds(700,200,100,100);
-        studyButton.setBounds(700, 200, 200, 100);
-        studyButton.setSize(200, 50);
-        DeckMenu.setLocation(0, 0);
-        DeckMenuPanel.add(DeckMenu);
-        DeckMenuPanel.add(studyButton);
-        mainWindow.add(DeckMenuPanel);
-        mainWindow.add(title);
-
-        //Displays the menu you see when you start the application
+            if(command.equals("Create Deck")){
+                statusLabel.setText("Will take you to create a deck");
+                controlPanel.setBackground(Color.RED);
+            }
+            else if(command.equals("Exit")){
+                statusLabel.setText("One day this will exit");
+                controlPanel.setBackground(Color.GREEN);
+            }
+        }
     }
-    public static void createCard(){
-        //Displays the area where you can enter in data in a user friendly way to create new cards.
-    }
-    public static void createDeck(){
-        //Shows where you can add all cards in one directory to a new deck.
-    }
-    public void actionPerformed(ActionEvent e){
-        //dosomething
-    }
-
-
-
 }
