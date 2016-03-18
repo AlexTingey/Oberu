@@ -1,11 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
-/**
- * Created by Alex on 11/14/2015.
- */
- public class Display{
+public class Display{
 
     private JFrame mainFrame;
     private JLabel header;
@@ -13,11 +12,14 @@ import java.awt.event.*;
     private JPanel controlPanel;
 
     public void prepareGUI() {
+        Font helvetica = new Font("Helvetica", Font.BOLD, 50);
         mainFrame = new JFrame("Oberu");
-        mainFrame.setSize(500, 650);
+        mainFrame.setSize(1000, 1000);
         mainFrame.setLayout(new GridLayout(3, 3));
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         header = new JLabel("", JLabel.CENTER);
+        header.setFont(helvetica);
         statusLabel = new JLabel("", JLabel.CENTER);
 
         statusLabel.setSize(350, 100);
@@ -56,16 +58,22 @@ import java.awt.event.*;
         public void actionPerformed(ActionEvent e){
             String command = e.getActionCommand();
             if(command.equals("Study")){
+                try{
+                    FileBrowser openDeck = new FileBrowser();
+                    openDeck.showIt();
+                }
+                catch(Exception m){
+                    System.out.println("Something went really wrong");
+                }
                 statusLabel.setText("Will take you to the study section");
-                controlPanel.setBackground(Color.BLACK);
+
             }
             if(command.equals("Create Deck")){
                 statusLabel.setText("Will take you to create a deck");
                 controlPanel.setBackground(Color.RED);
             }
             else if(command.equals("Exit")){
-                statusLabel.setText("One day this will exit");
-                controlPanel.setBackground(Color.GREEN);
+                System.exit(10);
             }
         }
     }
