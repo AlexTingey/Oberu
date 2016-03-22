@@ -2,6 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * @author Alex
+ * Created by Alex on 3/17/2016.
+ *
+ * I created the display class before I had any idea how a GUI in Java worked. As a result it has a terrible name.
+ * The "Display" class is really just the main menu. When user's open up the application this is where they will be taken first.
+ * This is an extremely important class because if it malfunctions then the user has no way to navigate to the other parts of the program.
+ */
 
 public class Display {
     private JFrame mainFrame;
@@ -10,8 +18,14 @@ public class Display {
     private JPanel controlPanel;
     private JFileChooser fileChooser;
     private JButton openButton;
-
-    public void prepareGUI() {
+    /**
+     *Here we define the JFrame window (mainFrame), a header and status label, the JPanel where we will have our buttons (controlPanel), and a JButton "open button".
+     * The interesting variable here is the JFileChooser fileChooser, this is an important variable because it is what allows the program to fetch the location of the deck it's supposed to be in.
+     */
+    public void prepareGUI(){
+        /**
+         * PrepareGUI is made to flesh out the constants of the GUI. What non interactive elements are going to be seen on the application.
+         */
         Font helvetica = new Font("Helvetica", Font.BOLD, 50);
         mainFrame = new JFrame("Oberu");
         //mainFrame.setLocationRelativeTo(null);
@@ -27,7 +41,6 @@ public class Display {
 
         controlPanel = new JPanel();
         controlPanel.setLayout(new FlowLayout());
-        controlPanel.setBackground(Color.blue);
 
         mainFrame.add(header);
         mainFrame.add(controlPanel);
@@ -36,6 +49,11 @@ public class Display {
         event();
     }
     public String fileSelect(){
+        /**
+         *File select is a method that creates the file selection menu seen when clicking on the study button.
+         * It was almost it's own class but then I decided that I could just implement it as a method within the display class, since the main menu is the only time the user would need to select anything.
+         *@return deckLocation The location of the deck we want to study/create
+         */
         openButton = new JButton();
         fileChooser = new JFileChooser();
         fileChooser.setVisible(true);
@@ -49,6 +67,11 @@ public class Display {
     }
 
     public void event(){
+        /**
+         * The event method is the method that allows us to define and consolidate all of the interactive elements within the GUI.
+         * This method is creates the Buttons, gives them an action command, defines their listener and then adds them into the
+         * JPanel that we created earlier.
+         */
         header.setText("Oberu");
 
         JButton studyButton = new JButton("Study");
@@ -68,6 +91,13 @@ public class Display {
         controlPanel.add(exitButton);
     }
     private class ButtonClickerListener implements ActionListener{
+        /**
+         * This class is the Action Listener for the Buttons created the event() method.
+         * It's what gives functionality to all of the buttons, take for example the Study
+         * button is setup to call the fileSelection method so that we can get the directory
+         * of the deck of cards in order to display the cards.
+         * @param e
+         */
         public void actionPerformed(ActionEvent e){
             String command = e.getActionCommand();
             if(command.equals("Study")){
@@ -77,8 +107,8 @@ public class Display {
                 cardDisplay.prepareGUI();
             }
             if(command.equals("Create Deck")){
-                statusLabel.setText("Will take you to create a deck");
-                controlPanel.setBackground(Color.RED);
+               displayDeckCreation deckCreation = new displayDeckCreation();
+                deckCreation.prepareGUI();
             }
             else if(command.equals("Exit")){
                 System.exit(10);

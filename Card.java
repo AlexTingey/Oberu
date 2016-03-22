@@ -1,61 +1,98 @@
 /**
+ * @author Alex
  * Created by Alex on 11/14/2015.
+ *
+ * This is where we wil define what a "card" is. A card is an object that has three strings: Body, Header, and Footer.
+ * With these three strings the user is able to see all necessary information for the card.
+ * It's essentially a flash card.
  */
+
 public class Card {
-   protected String cardBody, cardHeader, cardFooter;
+    protected String cardBody, cardHeader, cardFooter;
     protected int difficulty = 0;
-    //Creates the Card Object.
+    /**
+     *
+     * @param body
+     * @param header
+     * @param footer
+     * @param challenge
+     */
     public Card(String body, String header, String footer, int challenge){
-        //Declares that a card is composed of a body, header, and footer that are all strings.
         cardBody = body;
         cardHeader = header;
         cardFooter = footer;
         difficulty = challenge;
     }
+
     public String GetBody(){
-        //returns the body, or the main substance, of the flash card.
+        /**
+         * @return cardBody
+         */
         return this.cardBody;
     }
+
     public String GetHeader(){
-        //returns the header on the flashcard.
+        /**
+         * @return cardHeader
+         */
         return this.cardHeader;
     }
+
     public String GetFooter(){
-        //returns the footer on the flashcard.
+        /**
+         * @return cardFooter
+         */
         return this.cardFooter;
     }
+
     public void SaveCard(Card card){
-        //saves the card to a text file located in the same directory as the jar File.
-    }
-    public void DeleteCard(Card card){
-        //Deletes the card and wherever it has been placed.
+        /**
+         * This will save the card to a specific deck.
+         */
     }
 
-    public void setCardBody(String cardBody) {
+    public void DeleteCard(Card card){
+        /**
+         * This will delete the selected card.
+         */
+    }
+
+    public void setCardBody(String cardBody){
+        /**
+         * This will allow us to set the card body.
+         */
         this.cardBody = cardBody;
     }
 
-    public void setCardHeader(String cardHeader) {
+    public void setCardHeader(String cardHeader){
+        /**
+         * This will allow us to set the card header to whatever we please.
+         */
         this.cardHeader = cardHeader;
     }
 
-    public void setCardFooter(String cardFooter) {
+    public void setCardFooter(String cardFooter){
+        /**
+         * This allows us to set the card footer as whatever we please.
+         */
+        //Sets the Card footer to a desired string
         this.cardFooter = cardFooter;
     }
 
-    public void setDifficulty(int difficulty) {
+    public void setDifficulty(int difficulty){
+        /**
+         * This sets the difficult of the card.
+         */
+        //Sets the difficulty of the Card
         this.difficulty = difficulty;
     }
 
     public int getDifficulty(){
+        /**
+         * @reutrn cardDifficulty returns the difficulty of the card
+         */
         return this.difficulty;
 
     }
-    public static void createCard(){
-        //Displays the area where you can enter in data in a user friendly way to create new cards.
-    }
 
-    public static String forKapptie(){
-        return "Oberu";
-    }
 }
