@@ -1,19 +1,20 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
-public class Display{
 
+public class Display {
     private JFrame mainFrame;
     private JLabel header;
     private JLabel statusLabel;
     private JPanel controlPanel;
+    private JFileChooser fileChooser;
+    private JButton openButton;
 
     public void prepareGUI() {
         Font helvetica = new Font("Helvetica", Font.BOLD, 50);
         mainFrame = new JFrame("Oberu");
+        //mainFrame.setLocationRelativeTo(null);
         mainFrame.setSize(1000, 1000);
         mainFrame.setLayout(new GridLayout(3, 3));
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,6 +34,18 @@ public class Display{
         mainFrame.add(statusLabel);
         mainFrame.setVisible(true);
         event();
+    }
+    public String fileSelect(){
+        openButton = new JButton();
+        fileChooser = new JFileChooser();
+        fileChooser.setVisible(true);
+        fileChooser.setDialogTitle("Select Deck Location");
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        if(fileChooser.showOpenDialog(openButton) == JFileChooser.APPROVE_OPTION){
+            String deckLocation = fileChooser.getSelectedFile().getAbsolutePath();
+            return deckLocation;
+        }
+     return "";
     }
 
     public void event(){
@@ -58,15 +71,10 @@ public class Display{
         public void actionPerformed(ActionEvent e){
             String command = e.getActionCommand();
             if(command.equals("Study")){
-                try{
-                    FileBrowser openDeck = new FileBrowser();
-                    openDeck.showIt();
-                }
-                catch(Exception m){
-                    System.out.println("Something went really wrong");
-                }
                 statusLabel.setText("Will take you to the study section");
-
+                System.out.println(fileSelect());
+                displayCard cardDisplay = new displayCard();
+                cardDisplay.prepareGUI();
             }
             if(command.equals("Create Deck")){
                 statusLabel.setText("Will take you to create a deck");
