@@ -13,6 +13,9 @@ public class displayDeckCreation {
     private JFrame mainFrame;
     private JPanel controlPanel;
     private JLabel title;
+    private JButton openButton;
+    private JFileChooser fileChooser;
+    public String fileLocation = "";
     /**
      * Here we declare our JFrame, JPanel, and the title for the deck creation menu.
      */
@@ -22,6 +25,9 @@ public class displayDeckCreation {
          * This is where we establish all of the non-interactive elements of the GUI, so the title will be fleshed out here
          * as well as the JPanel.
          */
+        if(fileLocation.equals("")){
+            fileLocation = fileSelect();
+        }
         Font helvetica = new Font("Helvetica", Font.BOLD, 50);
         //have to keep consistency with Fonts.
         mainFrame = new JFrame("Create Card");
@@ -47,38 +53,41 @@ public class displayDeckCreation {
          * and put to use.
          */
         JButton create = new JButton("Create");
-        //JButton cancel = new JButton("Cancel");
 
-        JTextField header = new JTextField("Header", 10);
-        JTextField footer = new JTextField("Footer", 10);
-        JTextField body = new JTextField("Body", 5);
+       final JTextField header = new JTextField("Header", 10);
+       final JTextField footer = new JTextField("Footer", 10);
+       final JTextField body = new JTextField("Body", 5);
 
-        create.setActionCommand("Create");
-        //cancel.setActionCommand("Cancel");
-
-        create.addActionListener(new ButtonClickerListener());
-        //cancel.addActionListener(new ButtonClickerListener());
+        create.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                Card card = new Card();
+                card.saveCard(header.getText(),body.getText(),footer.getText(),fileLocation);
+                System.out.println(fileLocation);
+                mainFrame.setVisible(false);
+            }
+        });
 
         controlPanel.add(header);
         controlPanel.add(footer);
         controlPanel.add(body);
         controlPanel.add(create);
-       // controlPanel.add(cancel);
     }
-    private class ButtonClickerListener implements ActionListener{
+    public String fileSelect(){
         /**
-         * This class gives the buttons functionality.
-         * @param e
+         *File select is a method that creates the file selection menu seen when clicking on the study button.
+         * It was almost it's own class but then I decided that I could just implement it as a method within the display class, since the main menu is the only time the user would need to select anything.
+         *@return deckLocation The location of the deck we want to study/create
          */
-        public void actionPerformed(ActionEvent e){
-            String command = e.getActionCommand();
-            if(command.equals("Create")){
-                //todo it creates the card
-                System.out.println("Will one day create a card");
-            }
-            /*else if(command.equals("Cancel")){
-                System.exit(10);
-            }*/
+        openButton = new JButton();
+        fileChooser = new JFileChooser();
+        fileChooser.setVisible(true);
+        fileChooser.setDialogTitle("Select Where to save the Card");
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        if(fileChooser.showOpenDialog(openButton) == JFileChooser.APPROVE_OPTION){
+            String deckLocation = fileChooser.getSelectedFile().getAbsolutePath();
+            return deckLocation;
         }
+        return "";
     }
+
 }

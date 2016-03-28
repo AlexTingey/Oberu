@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * @author Alex
@@ -15,8 +16,14 @@ public class displayCard {
     private JPanel controlPanel;
     private JLabel header;
     private JLabel body;
+    private JFileChooser fileChooser;
+    private JButton openButton;
     private JLabel footer;
-    private Card carl = new Card("","","",0);
+    private Card displayedCard = new Card("","","",0,"");
+    private int cardWereOn = 0;
+    private String filedir = fileSelect();
+    private Deck deck = new Deck(filedir);
+    ArrayList<Card> sortDeck = deck.sortedDeck(deck);
     /**
      *Here we create our JFrame (mainFrame), our JPanel to hold the buttons (controlPanel),
      * and a couple Labels that we will use in order to display information.
@@ -26,11 +33,12 @@ public class displayCard {
          * Prepare GUI is where we lay out all of the non-interactive elements of the GUI. Things like
          * the card's information are displayed here.
          */
-        String cardHeader = new String("Mai Nichi");
-        String cardBody = new String("毎日");
-        carl.setCardHeader("Every Day");
-        carl.setCardBody("毎日");
-        carl.setCardFooter("まいにち");
+        displayedCard.setCardHeader(sortDeck.get(cardWereOn).getHeader());
+        displayedCard.setCardBody(sortDeck.get(cardWereOn).getBody());
+        displayedCard.setCardFooter(sortDeck.get(cardWereOn).getFooter());
+       /* else if(cardWereOn < sortDeck.size()){
+            JOptionPane.showMessageDialog(null, "There are no more cards to study in this directory");
+        }*/
         Font helveticaB = new Font("Helvetica", Font.BOLD, 50);
         Font helveticaM = new Font("Helvetica", Font.BOLD, 25);
         mainFrame = new JFrame("Study");
@@ -38,13 +46,13 @@ public class displayCard {
         mainFrame.setLayout(new GridLayout(4, 3));
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        header = new JLabel(carl.GetHeader(), JLabel.CENTER);
+        header = new JLabel(displayedCard.getHeader(), JLabel.CENTER);
         header.setFont(helveticaM);
 
-        body = new JLabel(carl.GetBody(), JLabel.CENTER);
+        body = new JLabel(displayedCard.getBody(), JLabel.CENTER);
         body.setFont(helveticaB);
 
-        footer = new JLabel(carl.GetFooter(), JLabel.CENTER);
+        footer = new JLabel(displayedCard.getFooter(), JLabel.CENTER);
         footer.setFont(helveticaM);
 
         controlPanel = new JPanel();
@@ -78,6 +86,24 @@ public class displayCard {
         controlPanel.add(ok);
         controlPanel.add(difficult);
     }
+    public String fileSelect(){
+        /**
+         *File select is a method that creates the file selection menu seen when clicking on the study button.
+         * It was almost it's own class but then I decided that I could just implement it as a method within the display class, since the main menu is the only time the user would need to select anything.
+         *@return deckLocation The location of the deck we want to study/create
+         */
+        openButton = new JButton();
+        fileChooser = new JFileChooser();
+        fileChooser.setVisible(true);
+        fileChooser.setDialogTitle("Select Deck Location");
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        if(fileChooser.showOpenDialog(openButton) == JFileChooser.APPROVE_OPTION){
+            String deckLocation = fileChooser.getSelectedFile().getAbsolutePath();
+            return deckLocation;
+        }
+        return "";
+    }
+
     private class ButtonClickerListener implements ActionListener{
         /**
          * Here we have our ButtonClick action listener.
@@ -90,18 +116,26 @@ public class displayCard {
         public void actionPerformed(ActionEvent e){
             String command = e.getActionCommand();
             if(command.equals("easy")){
-                SRS.demote(carl);
-                System.exit(10);
+                mainFrame.setVisible(false);
+                sortDeck.get(cardWereOn).easy();
+                cardWereOn ++;
+                prepareGUI();
+
                 //todo bring up next card.
             }
             if(command.equals("ok")){
-                carl.setDifficulty(carl.getDifficulty());
-                System.exit(10);
+                mainFrame.setVisible(false);
+                cardWereOn ++;
+                prepareGUI();
+                displayedCard.setDifficulty(displayedCard.getDifficulty());
                 //todo bring up next card
             }
             else if(command.equals("difficult")){
-                SRS.promote(carl);
-                System.exit(10);
+                mainFrame.setVisible(false);
+                sortDeck.get(cardWereOn).difficult();
+                cardWereOn ++;
+                prepareGUI();
+                SRS.promote(displayedCard);
                 //todo bring up next card
             }
         }

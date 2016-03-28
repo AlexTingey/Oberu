@@ -101,10 +101,9 @@ public class Display {
         public void actionPerformed(ActionEvent e){
             String command = e.getActionCommand();
             if(command.equals("Study")){
-                statusLabel.setText("Will take you to the study section");
-                System.out.println(fileSelect());
                 displayCard cardDisplay = new displayCard();
                 cardDisplay.prepareGUI();
+
             }
             if(command.equals("Create Deck")){
                displayDeckCreation deckCreation = new displayDeckCreation();

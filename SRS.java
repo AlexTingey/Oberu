@@ -19,8 +19,7 @@ public class SRS {
          * this method allows us to sort the deck in order of most difficult cards for the user first
          * to the easiest cards which will appear last.
          */
-        //todo implement sorting
-    }
+        }
     public static void demote(Card card){
         /**
          * @param card
