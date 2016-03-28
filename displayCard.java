@@ -63,6 +63,7 @@ public class displayCard {
         mainFrame.add(footer);
         mainFrame.add(controlPanel);
         mainFrame.setVisible(true);
+        mainFrame.setLocationRelativeTo(null);
         event();
     }
     public void event(){
@@ -116,27 +117,48 @@ public class displayCard {
         public void actionPerformed(ActionEvent e){
             String command = e.getActionCommand();
             if(command.equals("easy")){
-                mainFrame.setVisible(false);
-                sortDeck.get(cardWereOn).easy();
-                cardWereOn ++;
-                prepareGUI();
+                if(cardWereOn < sortDeck.size() -1){
+                    mainFrame.setVisible(false);
+                    sortDeck.get(cardWereOn).easy();
+                    cardWereOn ++;
+                    prepareGUI();
+                }
+                else{
+                    mainFrame.setVisible(false);
+                    JOptionPane.showMessageDialog(null, "You have studied all of the cards in this deck!");
+                    Display display = new Display();
+                    display.prepareGUI();
+                }
 
-                //todo bring up next card.
             }
             if(command.equals("ok")){
-                mainFrame.setVisible(false);
-                cardWereOn ++;
-                prepareGUI();
-                displayedCard.setDifficulty(displayedCard.getDifficulty());
-                //todo bring up next card
+                if(cardWereOn < sortDeck.size() -1 ){
+                    mainFrame.setVisible(false);
+                    sortDeck.get(cardWereOn).easy();
+                    cardWereOn ++;
+                    prepareGUI();
+                }
+                else{
+                    mainFrame.setVisible(false);
+                    JOptionPane.showMessageDialog(null, "You have studied all of the cards in this deck!");
+                    Display display = new Display();
+                    display.prepareGUI();
+                }
+
             }
             else if(command.equals("difficult")){
-                mainFrame.setVisible(false);
-                sortDeck.get(cardWereOn).difficult();
-                cardWereOn ++;
-                prepareGUI();
-                SRS.promote(displayedCard);
-                //todo bring up next card
+                if(cardWereOn < sortDeck.size() -1 ){
+                    mainFrame.setVisible(false);
+                    sortDeck.get(cardWereOn).easy();
+                    cardWereOn ++;
+                    prepareGUI();
+                }
+                else{
+                    mainFrame.setVisible(false);
+                    JOptionPane.showMessageDialog(null, "You have studied all of the cards in this deck!");
+                    Display display = new Display();
+                    display.prepareGUI();
+                }
             }
         }
     }

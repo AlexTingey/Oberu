@@ -31,7 +31,7 @@ public class Deck {
     }
 
     public ArrayList<Card> createDeck(String directory){
-        ArrayList<Card> deck = new ArrayList<Card>();
+        ArrayList<Card> deck = new ArrayList<>();
         FilenameFilter filter = new FilenameFilter(){
             @Override
             public boolean accept(File dir, String name){
@@ -55,7 +55,12 @@ public class Deck {
                 String filePath = textFiles[i].getAbsolutePath();
                 System.out.println("DECK ABS FILE PATH: " + filePath);
                 Card cardN = new Card(header,body,footer,difficulty,filePath);
-                deck.add(cardN);
+                if(cardN.getDifficulty() >= 150){
+                    System.out.println("Card " + cardN.getBody() + " no longer needs to be studied");
+                }
+                else{
+                    deck.add(cardN);
+                }
             }
             catch(IOException e){
                 JOptionPane.showMessageDialog(null, "IOException: " + e.getMessage());
@@ -65,9 +70,6 @@ public class Deck {
         }
         return deck;
     }
-    public void addCard(Card card){
-        //adds the card to the deck
-    }
     public void removeCard(Card card){
         //removes the card from the deck.
 
@@ -75,6 +77,12 @@ public class Deck {
     public ArrayList<Card> sortedDeck(Deck deck){
         ArrayList<Card> aDeck = deck.getDeck();
         Collections.sort(aDeck, new Card());
+        int startingSize = aDeck.size();
+        for(int i = 0; i < startingSize; i++){
+            if(aDeck.get(i).getDifficulty() < 100){
+                aDeck.add(aDeck.get(i));
+            }
+        }
         return aDeck;
     }
 

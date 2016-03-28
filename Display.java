@@ -29,7 +29,7 @@ public class Display {
         Font helvetica = new Font("Helvetica", Font.BOLD, 50);
         mainFrame = new JFrame("Oberu");
         //mainFrame.setLocationRelativeTo(null);
-        mainFrame.setSize(1000, 1000);
+        mainFrame.setSize(750, 750);
         mainFrame.setLayout(new GridLayout(3, 3));
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -46,6 +46,8 @@ public class Display {
         mainFrame.add(controlPanel);
         mainFrame.add(statusLabel);
         mainFrame.setVisible(true);
+        mainFrame.setLocationRelativeTo(null);
+
         event();
     }
     public String fileSelect(){
@@ -75,11 +77,11 @@ public class Display {
         header.setText("Oberu");
 
         JButton studyButton = new JButton("Study");
-        JButton createDeckButton = new JButton("Create Deck");
+        JButton createDeckButton = new JButton("Create Card");
         JButton exitButton = new JButton("Exit");
 
         studyButton.setActionCommand("Study");
-        createDeckButton.setActionCommand("Create Deck");
+        createDeckButton.setActionCommand("Create Card");
         exitButton.setActionCommand("Exit");
 
         studyButton.addActionListener(new ButtonClickerListener());
@@ -103,11 +105,12 @@ public class Display {
             if(command.equals("Study")){
                 displayCard cardDisplay = new displayCard();
                 cardDisplay.prepareGUI();
-
+                mainFrame.setVisible(false);
             }
-            if(command.equals("Create Deck")){
+            if(command.equals("Create Card")){
                displayDeckCreation deckCreation = new displayDeckCreation();
                 deckCreation.prepareGUI();
+                mainFrame.setVisible(false);
             }
             else if(command.equals("Exit")){
                 System.exit(10);

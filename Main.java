@@ -9,7 +9,6 @@ public class Main {
     public static void main(String[] args){
         Display mainMenu = new Display();
         mainMenu.prepareGUI();
-        int q = 10;
 
     }
 }

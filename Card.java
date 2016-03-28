@@ -143,12 +143,9 @@ public class Card implements Comparable<Card>, Comparator<Card> {
             String[] processedCardData = rawCardData.split("\\r?\\n");
             int numDifficulty = Integer.parseInt(processedCardData[3]) + 10;
             String acDifficulty = Integer.toString(numDifficulty);
-            System.out.println(acDifficulty);
             processedCardData[3] = acDifficulty;
-            System.out.println(processedCardData[3]);
             FileUtils.deleteQuietly(file);
             for (int i = 0; i < processedCardData.length; i++) {
-                System.out.println("DID WE MAKE IT?");
                 FileUtils.writeStringToFile(file, processedCardData[i], "UTF-8", true);
                 FileUtils.writeStringToFile(file, System.lineSeparator(), "UTF-8", true);
             }
@@ -162,10 +159,15 @@ public class Card implements Comparable<Card>, Comparator<Card> {
         Card card = new Card(header, body, footer, 0, fileLocation);
         File file = new File(card.fileLocation + File.separator + body + ".txt");
         String[] cardInfo = {header, body, footer, "0"};
-        try{
-            for(int i = 0; i < cardInfo.length; i++){
-                FileUtils.writeStringToFile(file, cardInfo[i], "UTF-8", true);
-                FileUtils.writeStringToFile(file, System.lineSeparator(), "UTF-8", true);
+        try {
+            if (file.exists()) {
+                JOptionPane.showMessageDialog(null, "A card with the same body already exists in this deck");
+            } else {
+                for (int i = 0; i < cardInfo.length; i++) {
+                    FileUtils.writeStringToFile(file, cardInfo[i], "UTF-8", true);
+                    FileUtils.writeStringToFile(file, System.lineSeparator(), "UTF-8", true);
+                }
+                JOptionPane.showMessageDialog(null, "File successfully created");
             }
         }
         catch(IOException e){

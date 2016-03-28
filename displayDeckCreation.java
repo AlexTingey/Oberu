@@ -28,7 +28,7 @@ public class displayDeckCreation {
         if(fileLocation.equals("")){
             fileLocation = fileSelect();
         }
-        Font helvetica = new Font("Helvetica", Font.BOLD, 50);
+        Font helvetica = new Font("Helvetica", Font.BOLD, 35);
         //have to keep consistency with Fonts.
         mainFrame = new JFrame("Create Card");
         mainFrame.setSize(500, 500);
@@ -44,6 +44,7 @@ public class displayDeckCreation {
         mainFrame.add(title);
         mainFrame.add(controlPanel);
         mainFrame.setVisible(true);
+        mainFrame.setLocationRelativeTo(null);
 
         event();
     }
@@ -56,20 +57,27 @@ public class displayDeckCreation {
 
        final JTextField header = new JTextField("Header", 10);
        final JTextField footer = new JTextField("Footer", 10);
-       final JTextField body = new JTextField("Body", 5);
+       final JTextField body = new JTextField("Body", 10);
 
-        create.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
+        create.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 Card card = new Card();
-                card.saveCard(header.getText(),body.getText(),footer.getText(),fileLocation);
-                System.out.println(fileLocation);
-                mainFrame.setVisible(false);
+                if(body.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(null, "The body field must be filled in order to create the card.");
+                }
+                else{
+                    card.saveCard(header.getText(), body.getText(), footer.getText(), fileLocation);
+                    mainFrame.setVisible(false);
+                    Display display = new Display();
+                    display.prepareGUI();
+                    System.out.println(fileLocation);
+                }
             }
         });
 
         controlPanel.add(header);
-        controlPanel.add(footer);
         controlPanel.add(body);
+        controlPanel.add(footer);
         controlPanel.add(create);
     }
     public String fileSelect(){
