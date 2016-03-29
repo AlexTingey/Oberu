@@ -62,8 +62,8 @@ public class displayDeckCreation {
         create.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Card card = new Card();
-                if(body.getText().isEmpty()){
-                    JOptionPane.showMessageDialog(null, "The body field must be filled in order to create the card.");
+                if(body.getText().isEmpty() || body.getText().contains("\\") || body.getText().contains("/")){
+                    JOptionPane.showMessageDialog(null, "Illegal argument in body section, please change the input.");
                 }
                 else{
                     card.saveCard(header.getText(), body.getText(), footer.getText(), fileLocation);
@@ -91,11 +91,15 @@ public class displayDeckCreation {
         fileChooser.setVisible(true);
         fileChooser.setDialogTitle("Select Where to save the Card");
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        if(fileChooser.showOpenDialog(openButton) == JFileChooser.APPROVE_OPTION){
+        if(fileChooser.showOpenDialog(openButton) == JFileChooser.APPROVE_OPTION) {
             String deckLocation = fileChooser.getSelectedFile().getAbsolutePath();
             return deckLocation;
         }
-        return "";
+        else{
+            return fileChooser.getFileSystemView().getDefaultDirectory().toString();
+
+        }
+
     }
 
 }
