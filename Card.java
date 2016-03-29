@@ -116,7 +116,7 @@ public class Card implements Comparable<Card>, Comparator<Card> {
     public void difficult() {
         File file = new File(this.fileLocation);
         try {
-            String rawCardData = FileUtils.readFileToString(file);
+            String rawCardData = FileUtils.readFileToString(file, "UTF-8");
             String[] processedCardData = rawCardData.split("\\r?\\n");
             int numDifficulty = Integer.parseInt(processedCardData[3]) - 10;
             String acDifficulty = Integer.toString(numDifficulty);
@@ -139,7 +139,7 @@ public class Card implements Comparable<Card>, Comparator<Card> {
     public void easy() {
         File file = new File(this.fileLocation);
         try {
-            String rawCardData = FileUtils.readFileToString(file);
+            String rawCardData = FileUtils.readFileToString(file, "UTF-8");
             String[] processedCardData = rawCardData.split("\\r?\\n");
             int numDifficulty = Integer.parseInt(processedCardData[3]) + 10;
             String acDifficulty = Integer.toString(numDifficulty);
@@ -167,7 +167,7 @@ public class Card implements Comparable<Card>, Comparator<Card> {
                     FileUtils.writeStringToFile(file, cardInfo[i], "UTF-8", true);
                     FileUtils.writeStringToFile(file, System.lineSeparator(), "UTF-8", true);
                 }
-                JOptionPane.showMessageDialog(null, "File successfully created");
+                //JOptionPane.showMessageDialog(null, "File successfully created");
             }
         }
         catch(IOException e){

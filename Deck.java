@@ -31,6 +31,7 @@ public class Deck {
     }
 
     public ArrayList<Card> createDeck(String directory){
+        int difficulty;
         ArrayList<Card> deck = new ArrayList<>();
         FilenameFilter filter = new FilenameFilter(){
             @Override
@@ -43,7 +44,7 @@ public class Deck {
         for(int i = 0; i < textFiles.length; i++){
             File card = textFiles[i];
             try{
-                String rawCardData = FileUtils.readFileToString(card);
+                String rawCardData = FileUtils.readFileToString(card, "UTF-8");
                 String[] processedCardData = rawCardData.split("\\r?\\n");
                 String header = processedCardData[0];
                 System.out.println(header);
@@ -51,7 +52,25 @@ public class Deck {
                 System.out.println(body);
                 String footer = processedCardData[2];
                 System.out.println(footer);
-                int difficulty = Integer.parseInt(processedCardData[3]);
+                if(processedCardData.length < 4 || !processedCardData[3].matches("^[0-9]")){
+                    System.out.println("test");
+                    FileUtils.deleteQuietly(textFiles[i]);
+                    for(int j = 0; j < 4; j++){
+                        if(j == 3){
+                            System.out.println("test3");
+                            FileUtils.writeStringToFile(textFiles[i], "0", "UTF-8", true);
+                        }
+                        else{
+                            System.out.println("test2");
+                            FileUtils.writeStringToFile(textFiles[i], processedCardData[j], "UTF-8", true);
+                            FileUtils.writeStringToFile(textFiles[i], System.lineSeparator(), "UTF-8", true);
+                        }
+                    }
+                    difficulty = 0;
+                }
+                else{
+                     difficulty = Integer.parseInt(processedCardData[3]);
+                }
                 String filePath = textFiles[i].getAbsolutePath();
                 System.out.println("DECK ABS FILE PATH: " + filePath);
                 Card cardN = new Card(header,body,footer,difficulty,filePath);

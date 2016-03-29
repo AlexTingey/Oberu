@@ -149,7 +149,7 @@ public class displayCard {
             else if(command.equals("difficult")){
                 if(cardWereOn < sortDeck.size() -1 ){
                     mainFrame.setVisible(false);
-                    sortDeck.get(cardWereOn).easy();
+                    sortDeck.get(cardWereOn).difficult();
                     cardWereOn ++;
                     prepareGUI();
                 }
