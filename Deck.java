@@ -31,6 +31,12 @@ public class Deck {
     }
 
     public ArrayList<Card> createDeck(String directory){
+        /**
+         * @param directory
+         *
+         * This create deck method is able to be passed a String "Directory" and once it is given this directory
+         * it is able to read the files there, transform them into cards and then add them into the deck to be displayed.
+         */
         int difficulty;
         ArrayList<Card> deck = new ArrayList<>();
         FilenameFilter filter = new FilenameFilter(){
@@ -52,6 +58,10 @@ public class Deck {
                 System.out.println(body);
                 String footer = processedCardData[2];
                 System.out.println(footer);
+                /*This checks to make sure that the file contains the 4th line of the text document
+                This line is important because without it the program cannot function properly, so if it finds that that line is missing or
+                that the line contains any data that isn't a number it removes that line and turns it into a 0, allowing the card to be read and displayed properly.
+                 */
                 if(processedCardData.length < 4 || !processedCardData[3].matches("^[0-9]")){
                     System.out.println("test");
                     FileUtils.deleteQuietly(textFiles[i]);
@@ -89,11 +99,14 @@ public class Deck {
         }
         return deck;
     }
-    public void removeCard(Card card){
-        //removes the card from the deck.
-
-    }
     public ArrayList<Card> sortedDeck(Deck deck){
+        /**
+         * @param deck
+         *
+         * This method takes in a deck and returns it as a sorted ArrayList full of cards, these cards are sorted with the most
+         * difficult appearing cards appearing both first and last. A card qualifies as "difficult" if it's difficulty level is less
+         * than 100.
+         */
         ArrayList<Card> aDeck = deck.getDeck();
         Collections.sort(aDeck, new Card());
         int startingSize = aDeck.size();

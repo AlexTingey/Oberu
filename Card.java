@@ -57,11 +57,6 @@ public class Card implements Comparable<Card>, Comparator<Card> {
         return this.cardFooter;
     }
 
-    public void DeleteCard(Card card) {
-        /**
-         * This will delete the selected card.
-         */
-    }
 
     public void setCardBody(String cardBody) {
         /**
@@ -102,6 +97,10 @@ public class Card implements Comparable<Card>, Comparator<Card> {
     }
 
     public int compareTo(Card c) {
+        /**
+         * @param Card c
+         * This method allows Oberu to sort the cards as needed.
+         */
         Integer thisDifficulty = this.getDifficulty();
         Integer cDifficulty = c.getDifficulty();
         return thisDifficulty.compareTo(cDifficulty);
@@ -109,11 +108,20 @@ public class Card implements Comparable<Card>, Comparator<Card> {
     }
 
     public int compare(Card c1, Card c2) {
+        /**
+         * @param Card c1, Card c2.
+         * This method also allows the program to sort the cards in the deck in the order they must appear in.
+         * With the most difficult cards appearing first and last.
+         */
         return c1.difficulty - c2.difficulty;
 
     }
 
     public void difficult() {
+        /**
+         * This method is incredibly important to the program. This allows the user to alter the difficulty level of the cards.
+         * If the user tags a card as being difficult then the card's data is altered so that the difficulty is decremented by 10.
+         */
         File file = new File(this.fileLocation);
         try {
             String rawCardData = FileUtils.readFileToString(file, "UTF-8");
@@ -137,6 +145,10 @@ public class Card implements Comparable<Card>, Comparator<Card> {
     }
 
     public void easy() {
+        /**
+         * This method is also incredibly important to the program. This does the same thing as the difficult() method
+         * but instead increments the card's data by 10, makign the card marked as "easier" compared to other cards.
+         */
         File file = new File(this.fileLocation);
         try {
             String rawCardData = FileUtils.readFileToString(file, "UTF-8");
@@ -156,6 +168,11 @@ public class Card implements Comparable<Card>, Comparator<Card> {
 
     }
     public void saveCard(String header, String body, String footer, String fileLocation){
+        /**
+         * @params String header, body, footer, fileLocation
+         * This method allows the user to save a card to a certain location. This is important because it allows the user to
+         * create cards to study in a simple an intuitive environment.
+         */
         Card card = new Card(header, body, footer, 0, fileLocation);
         File file = new File(card.fileLocation + File.separator + body + ".txt");
         String[] cardInfo = {header, body, footer, "0"};
@@ -167,7 +184,7 @@ public class Card implements Comparable<Card>, Comparator<Card> {
                     FileUtils.writeStringToFile(file, cardInfo[i], "UTF-8", true);
                     FileUtils.writeStringToFile(file, System.lineSeparator(), "UTF-8", true);
                 }
-                //JOptionPane.showMessageDialog(null, "File successfully created");
+                JOptionPane.showMessageDialog(null, "File successfully created");
             }
         }
         catch(IOException e){
